@@ -5,7 +5,7 @@ MIGRATION_DATABASE:=./migrate.db
 PACKAGE_SLUG={{cookiecutter.__package_slug}}
 ifdef CI
 	PYTHON_PYENV :=
-	PYTHON_VERSION := $(shell python --version|cut -d" " -f2)
+	PYTHON_VERSION := $(shell python3 --version|cut -d" " -f2)
 else
 	PYTHON_PYENV := pyenv
 	PYTHON_VERSION := $(shell cat .python-version)
@@ -13,7 +13,7 @@ endif
 PYTHON_SHORT_VERSION := $(shell echo $(PYTHON_VERSION) | grep -o '[0-9].[0-9]*')
 
 ifeq ($(USE_SYSTEM_PYTHON), true)
-	PYTHON_PACKAGE_PATH:=$(shell python -c "import sys; print(sys.path[-1])")
+	PYTHON_PACKAGE_PATH:=$(shell python3 -c "import sys; print(sys.path[-1])")
 	PYTHON_ENV :=
 	PYTHON := python
 	PYTHON_VENV :=
@@ -36,7 +36,7 @@ all: $(PACKAGE_CHECK)
 install: $(PYTHON_PYENV) $(PYTHON_VENV) pip
 
 .venv:
-	python -m venv .venv
+	python3 -m venv .venv
 
 .PHONY: pyenv
 pyenv:
